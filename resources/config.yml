@@ -1,0 +1,13 @@
+# Discord: https://discord.gg/4bAceda9q3
+# Github : https://github.com/ValresMC
+# By Valres
+#
+#
+# Not allowed worlds :
+worlds:
+  - "world"
+  - "test"
+# Height limit :
+limit: 100
+# Message :
+message: "You have reached the height limit of the world !"
