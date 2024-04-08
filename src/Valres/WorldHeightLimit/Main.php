@@ -16,6 +16,7 @@ class Main extends PluginBase implements Listener
     public LimitManager $limitManager;
 
     use SingletonTrait;
+    
     protected function onEnable(): void
     {
         $this->getLogger()->info("by Valres est lancé !");
