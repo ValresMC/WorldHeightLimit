@@ -3,11 +3,13 @@
 # By Valres
 #
 #
-# Not allowed worlds :
-worlds:
-  - "world"
-  - "test"
-# Height limit :
+# true for all worlds :
+all-worlds: "false"
 limit: 100
+
+worlds:
+  world_1: 100
+  world_pvp: 125
+
 # Message :
 message: "You have reached the height limit of the world !"

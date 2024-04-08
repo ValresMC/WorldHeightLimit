@@ -17,11 +17,13 @@
 
 ## TODO :
 
-| ToDo | ❔ |
-| :----: | :----: |
-| bypass permission | ✔ |
-| allowed world | ✔ |
-| "all worlds" parameter | ❌ |
+|          ToDo          | ❔ |
+|:----------------------:|:-:|
+|    per world limit     | ✔ |
+|   bypass permission    | ✔ |
+|     allowed world      | ✔ |
+| "all worlds" parameter | ✔ |
+
 
 ## My discord :
 

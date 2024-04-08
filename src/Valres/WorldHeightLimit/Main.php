@@ -6,63 +6,29 @@ use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\SingletonTrait;
+use Valres\WorldHeightLimit\listeners\BlockBreak;
+use Valres\WorldHeightLimit\listeners\BlockPlace;
+use Valres\WorldHeightLimit\managers\LimitManager;
 
 class Main extends PluginBase implements Listener
 {
-    public static string $messages = "";
-    public static int $limit;
-    public static array $worlds = [];
+    public LimitManager $limitManager;
 
+    use SingletonTrait;
     protected function onEnable(): void
     {
         $this->getLogger()->info("by Valres est lancé !");
 
         $this->saveDefaultConfig();
-        $config = $this->getConfig();
-        $this->getServer()->getPluginManager()->registerEvents($this, $this);
-
-        foreach($config->get("worlds") as $world){
-            if(!isset(self::$worlds[$world])){
-                self::$worlds[] = $world;
-            }
-        }
-
-        self::$messages = $config->get("message");
-        self::$limit = $config->get("limit");
+        $this->getServer()->getPluginManager()->registerEvents(new BlockBreak(), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new BlockPlace(), $this);
+        $this->limitManager = new LimitManager();
     }
 
-    public function onPlace(BlockPlaceEvent $event): void
+    protected function onLoad(): void
     {
-        $player = $event->getPlayer();
-        $blocks = $event->getTransaction()->getBlocks();
-        $world = $player->getWorld()->getFolderName();
-
-        if(!$player->hasPermission("worldheight.bypass")){
-            if(in_array($world, self::$worlds)){
-                foreach ($blocks as $placed){
-                    $block = $placed[3];
-                    if($block->getPosition()->y >= self::$limit){
-                        $event->cancel();
-                        $player->sendMessage(self::$messages);
-                    }
-                }
-            }
-        }
+        self::setInstance($this);
     }
 
-    public function onBreak(BlockBreakEvent $event): void
-    {
-        $player = $event->getPlayer();
-        $block = $event->getBlock();
-        $world = $player->getWorld()->getFolderName();
-
-        if(!$player->hasPermission("worldheight.bypass")){
-            if(in_array($world, self::$worlds)){
-                if($block->getPosition()->y >= self::$limit){
-                    $event->cancel();
-                    $player->sendMessage(self::$messages);
-                }
-            }
-        }
-    }
 }
